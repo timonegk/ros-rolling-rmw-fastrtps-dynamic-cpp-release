@@ -1,0 +1,147 @@
+From: Timon <todo@todo.todo>
+Date: Sat, 21 May 2022 15:05:21 +0000
+Subject: Add stuff
+
+---
+ CHANGELOG.rst            |  5 +++++
+ package.xml              |  2 +-
+ src/rmw_client.cpp       | 14 ++++++++++++++
+ src/rmw_event.cpp        | 14 ++++++++++++++
+ src/rmw_features.cpp     |  1 -
+ src/rmw_service.cpp      | 14 ++++++++++++++
+ src/rmw_subscription.cpp | 14 ++++++++++++++
+ 7 files changed, 62 insertions(+), 2 deletions(-)
+
+diff --git a/CHANGELOG.rst b/CHANGELOG.rst
+index 868a55b..85f2f49 100644
+--- a/CHANGELOG.rst
++++ b/CHANGELOG.rst
+@@ -2,6 +2,11 @@
+ Changelog for package rmw_fastrtps_dynamic_cpp
+ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 
++6.3.0 (2022-05-03)
++------------------
++* Handle 'best_available' QoS policies (`#598 <https://github.com/ros2/rmw_fastrtps/issues/598>`_)
++* Contributors: Jacob Perron
++
+ 6.2.1 (2022-03-28)
+ ------------------
+ * Add content filter topic feature (`#513 <https://github.com/ros2/rmw_fastrtps/issues/513>`_)
+diff --git a/package.xml b/package.xml
+index 59f5bfc..7f3be76 100644
+--- a/package.xml
++++ b/package.xml
+@@ -2,7 +2,7 @@
+ <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+ <package format="3">
+   <name>rmw_fastrtps_dynamic_cpp</name>
+-  <version>6.2.1</version>
++  <version>6.3.0</version>
+   <description>Implement the ROS middleware interface using introspection type support.</description>
+   <maintainer email="michel@ekumenlabs.com">Michel Hidalgo</maintainer>
+   <maintainer email="michael.jeronimo@openrobotics.org">Michael Jeronimo</maintainer>
+diff --git a/src/rmw_client.cpp b/src/rmw_client.cpp
+index b72852a..81d7de3 100644
+--- a/src/rmw_client.cpp
++++ b/src/rmw_client.cpp
+@@ -572,4 +572,18 @@ rmw_client_response_subscription_get_actual_qos(
+ 
+   return rmw_fastrtps_shared_cpp::__rmw_client_response_subscription_get_actual_qos(client, qos);
+ }
++
++rmw_ret_t
++rmw_client_set_on_new_response_callback(
++  rmw_client_t * rmw_client,
++  rmw_event_callback_t callback,
++  const void * user_data)
++{
++  RMW_CHECK_ARGUMENT_FOR_NULL(rmw_client, RMW_RET_INVALID_ARGUMENT);
++
++  return rmw_fastrtps_shared_cpp::__rmw_client_set_on_new_response_callback(
++    rmw_client,
++    callback,
++    user_data);
++}
+ }  // extern "C"
+diff --git a/src/rmw_event.cpp b/src/rmw_event.cpp
+index c4b5a72..1316357 100644
+--- a/src/rmw_event.cpp
++++ b/src/rmw_event.cpp
+@@ -47,4 +47,18 @@ rmw_subscription_event_init(
+     subscription->data,
+     event_type);
+ }
++
++rmw_ret_t
++rmw_event_set_callback(
++  rmw_event_t * rmw_event,
++  rmw_event_callback_t callback,
++  const void * user_data)
++{
++  RMW_CHECK_ARGUMENT_FOR_NULL(rmw_event, RMW_RET_INVALID_ARGUMENT);
++
++  return rmw_fastrtps_shared_cpp::__rmw_event_set_callback(
++    rmw_event,
++    callback,
++    user_data);
++}
+ }  // extern "C"
+diff --git a/src/rmw_features.cpp b/src/rmw_features.cpp
+index 13745a7..79379b8 100644
+--- a/src/rmw_features.cpp
++++ b/src/rmw_features.cpp
+@@ -18,7 +18,6 @@
+ 
+ extern "C"
+ {
+-
+ bool
+ rmw_feature_supported(rmw_feature_t feature)
+ {
+diff --git a/src/rmw_service.cpp b/src/rmw_service.cpp
+index a0d5f4b..269f3ce 100644
+--- a/src/rmw_service.cpp
++++ b/src/rmw_service.cpp
+@@ -571,4 +571,18 @@ rmw_service_request_subscription_get_actual_qos(
+ 
+   return rmw_fastrtps_shared_cpp::__rmw_service_request_subscription_get_actual_qos(service, qos);
+ }
++
++rmw_ret_t
++rmw_service_set_on_new_request_callback(
++  rmw_service_t * rmw_service,
++  rmw_event_callback_t callback,
++  const void * user_data)
++{
++  RMW_CHECK_ARGUMENT_FOR_NULL(rmw_service, RMW_RET_INVALID_ARGUMENT);
++
++  return rmw_fastrtps_shared_cpp::__rmw_service_set_on_new_request_callback(
++    rmw_service,
++    callback,
++    user_data);
++}
+ }  // extern "C"
+diff --git a/src/rmw_subscription.cpp b/src/rmw_subscription.cpp
+index d3059c4..7da462d 100644
+--- a/src/rmw_subscription.cpp
++++ b/src/rmw_subscription.cpp
+@@ -209,4 +209,18 @@ rmw_destroy_subscription(rmw_node_t * node, rmw_subscription_t * subscription)
+   return rmw_fastrtps_shared_cpp::__rmw_destroy_subscription(
+     eprosima_fastrtps_identifier, node, subscription);
+ }
++
++rmw_ret_t
++rmw_subscription_set_on_new_message_callback(
++  rmw_subscription_t * rmw_subscription,
++  rmw_event_callback_t callback,
++  const void * user_data)
++{
++  RMW_CHECK_ARGUMENT_FOR_NULL(rmw_subscription, RMW_RET_INVALID_ARGUMENT);
++
++  return rmw_fastrtps_shared_cpp::__rmw_subscription_set_on_new_message_callback(
++    rmw_subscription,
++    callback,
++    user_data);
++}
+ }  // extern "C"
