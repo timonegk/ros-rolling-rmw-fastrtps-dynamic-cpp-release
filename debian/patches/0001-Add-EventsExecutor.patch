@@ -1,51 +1,19 @@
-From: Timon <todo@todo.todo>
-Date: Sat, 21 May 2022 15:05:21 +0000
-Subject: Add stuff
+From: Timon Engelke <timon.engelke@online.de>
+Date: Thu, 9 Jun 2022 13:14:25 +0200
+Subject: Add EventsExecutor
 
 ---
- CHANGELOG.rst            |  5 +++++
- package.xml              |  2 +-
  src/rmw_client.cpp       | 14 ++++++++++++++
  src/rmw_event.cpp        | 14 ++++++++++++++
- src/rmw_features.cpp     |  1 -
  src/rmw_service.cpp      | 14 ++++++++++++++
  src/rmw_subscription.cpp | 14 ++++++++++++++
- 7 files changed, 62 insertions(+), 2 deletions(-)
+ 4 files changed, 56 insertions(+)
 
-diff --git a/CHANGELOG.rst b/CHANGELOG.rst
-index 868a55b..85f2f49 100644
---- a/CHANGELOG.rst
-+++ b/CHANGELOG.rst
-@@ -2,6 +2,11 @@
- Changelog for package rmw_fastrtps_dynamic_cpp
- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
- 
-+6.3.0 (2022-05-03)
-+------------------
-+* Handle 'best_available' QoS policies (`#598 <https://github.com/ros2/rmw_fastrtps/issues/598>`_)
-+* Contributors: Jacob Perron
-+
- 6.2.1 (2022-03-28)
- ------------------
- * Add content filter topic feature (`#513 <https://github.com/ros2/rmw_fastrtps/issues/513>`_)
-diff --git a/package.xml b/package.xml
-index 59f5bfc..7f3be76 100644
---- a/package.xml
-+++ b/package.xml
-@@ -2,7 +2,7 @@
- <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
- <package format="3">
-   <name>rmw_fastrtps_dynamic_cpp</name>
--  <version>6.2.1</version>
-+  <version>6.3.0</version>
-   <description>Implement the ROS middleware interface using introspection type support.</description>
-   <maintainer email="michel@ekumenlabs.com">Michel Hidalgo</maintainer>
-   <maintainer email="michael.jeronimo@openrobotics.org">Michael Jeronimo</maintainer>
 diff --git a/src/rmw_client.cpp b/src/rmw_client.cpp
-index b72852a..81d7de3 100644
+index 765e0df..e759cd0 100644
 --- a/src/rmw_client.cpp
 +++ b/src/rmw_client.cpp
-@@ -572,4 +572,18 @@ rmw_client_response_subscription_get_actual_qos(
+@@ -577,4 +577,18 @@ rmw_client_response_subscription_get_actual_qos(
  
    return rmw_fastrtps_shared_cpp::__rmw_client_response_subscription_get_actual_qos(client, qos);
  }
@@ -87,23 +55,11 @@ index c4b5a72..1316357 100644
 +    user_data);
 +}
  }  // extern "C"
-diff --git a/src/rmw_features.cpp b/src/rmw_features.cpp
-index 13745a7..79379b8 100644
---- a/src/rmw_features.cpp
-+++ b/src/rmw_features.cpp
-@@ -18,7 +18,6 @@
- 
- extern "C"
- {
--
- bool
- rmw_feature_supported(rmw_feature_t feature)
- {
 diff --git a/src/rmw_service.cpp b/src/rmw_service.cpp
-index a0d5f4b..269f3ce 100644
+index edb9d1a..1d0fce7 100644
 --- a/src/rmw_service.cpp
 +++ b/src/rmw_service.cpp
-@@ -571,4 +571,18 @@ rmw_service_request_subscription_get_actual_qos(
+@@ -576,4 +576,18 @@ rmw_service_request_subscription_get_actual_qos(
  
    return rmw_fastrtps_shared_cpp::__rmw_service_request_subscription_get_actual_qos(service, qos);
  }
@@ -123,10 +79,10 @@ index a0d5f4b..269f3ce 100644
 +}
  }  // extern "C"
 diff --git a/src/rmw_subscription.cpp b/src/rmw_subscription.cpp
-index d3059c4..7da462d 100644
+index 1fe1780..5a9933a 100644
 --- a/src/rmw_subscription.cpp
 +++ b/src/rmw_subscription.cpp
-@@ -209,4 +209,18 @@ rmw_destroy_subscription(rmw_node_t * node, rmw_subscription_t * subscription)
+@@ -221,4 +221,18 @@ rmw_destroy_subscription(rmw_node_t * node, rmw_subscription_t * subscription)
    return rmw_fastrtps_shared_cpp::__rmw_destroy_subscription(
      eprosima_fastrtps_identifier, node, subscription);
  }
