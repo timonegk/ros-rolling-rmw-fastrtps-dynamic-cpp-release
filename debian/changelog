@@ -1,3 +1,9 @@
+ros-rolling-rmw-fastrtps-dynamic-cpp (6.3.0-1jammy.events2) jammy; urgency=high
+
+  * Rebuild with updated ros-rolling-rmw-fastrtps-shared-cpp
+
+ -- Timon Engelke <debian@timonengelke.de>  Thu, 30 Jun 2022 23:23:09 +0200
+
 ros-rolling-rmw-fastrtps-dynamic-cpp (6.3.0-1jammy.events1) jammy; urgency=high
 
   * Rebuild with updated ros-rolling-rmw-fastrtps-shared-cpp
